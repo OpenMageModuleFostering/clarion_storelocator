@@ -21,12 +21,12 @@ class Clarion_Storelocator_Model_Storelocator extends Mage_Core_Model_Abstract
      * Check if store exists based on its name
      *
      * @param $storeName store name
-     * @param $storeId store id
+     * @param $storelocatorId storelocator id
      * @return boolean
      */
-    public function storeExists($storeName, $storeId = null)
+    public function storeExists($storeName, $storelocatorId = null)
     {
-        $result = $this->_getResource()->storeExists($storeName, $storeId);
+        $result = $this->_getResource()->storeExists($storeName, $storelocatorId);
         return (is_array($result) && count($result) > 0) ? true : false;
     }
     

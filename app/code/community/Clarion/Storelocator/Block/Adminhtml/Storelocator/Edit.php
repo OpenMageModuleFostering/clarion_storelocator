@@ -15,7 +15,7 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Edit extends Mage_Adminh
          * This variable has the forms entity primary key, e.g the delete button URL would be 
          * module/controller/action/$this->_objectid/3
          */
-        $this->_objectId = 'store_id';
+        $this->_objectId = 'storelocator_id';
         
         /*
          * There two variables are very important, these variables are used to find FORM tags php file.

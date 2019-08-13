@@ -12,8 +12,8 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Edit_Tab_Form extends Ma
     protected function _prepareForm()
     {
         $model = Mage::registry('storelocator_data');
-        
-        if ($data = $model->getData()) {
+        $data = $model->getData();
+        if ($data) {
             if(isset($data['store_logo'])) {
                 $data['store_logo'] = 'clarion_storelocator/' . $data['store_logo'];
             }
@@ -26,11 +26,33 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Edit_Tab_Form extends Ma
         $fieldset = $form->addFieldset('form_General', array('legend'=>Mage::helper('clarion_storelocator')->__('General information')));
         
         if ($model->getId()) {
-            $fieldset->addField('store_id', 'hidden', array(
-                'name' => 'store_id',
+            $fieldset->addField('storelocator_id', 'hidden', array(
+                'name' => 'storelocator_id',
             ));
         }
-    
+        
+                 /**
+         * Check is single store mode
+         */
+        if (!Mage::app()->isSingleStoreMode()) {
+            $field = $fieldset->addField('store_id', 'multiselect', array(
+                'name'      => 'stores[]',
+                'label'     => Mage::helper('clarion_storelocator')->__('Store View'),
+                'title'     => Mage::helper('clarion_storelocator')->__('Store View'),
+                'required'  => true,
+                'values'    => Mage::getSingleton('adminhtml/system_store')->getStoreValuesForForm(false, true),
+            ));
+            
+            $renderer = $this->getLayout()->createBlock('adminhtml/store_switcher_form_renderer_fieldset_element');
+            $field->setRenderer($renderer);
+        }
+        else {
+            $fieldset->addField('store_id', 'hidden', array(
+                'name'      => 'stores[]',
+                'value'     => Mage::app()->getStore(true)->getId(),
+            ));
+        }
+        
         $fieldset->addField('name', 'text', array(
           'label'     => Mage::helper('clarion_storelocator')->__('Store Name'),
           'class'     => 'required-entry',

@@ -25,6 +25,7 @@ class Clarion_Storelocator_Block_List extends Mage_Core_Block_Template
     protected function _getStoreCollection()
     {
         $collection = Mage::getModel('clarion_storelocator/storelocator')->getCollection()
+            ->addStoreFilter(Mage::app()->getStore()->getId())
             ->addStatusFilter();
         return $collection;
     }
@@ -112,10 +113,10 @@ class Clarion_Storelocator_Block_List extends Mage_Core_Block_Template
             $storesPerPage = Mage::helper('clarion_storelocator')->getStoresPerPage();
             $pager->setAvailableLimit(array($storesPerPage => $storesPerPage));
             $pager->setTotalNum($this->getStoreCollection()->getSize());
-            $pager->setPagerUrl(array('country'=>'india'));
+           // $pager->setPagerUrl(array('country'=>'india'));
             $pager->setCollection($this->getStoreCollection());
             $pager->setShowPerPage(true);
-
+            $pager->setShowAmounts(true);
             return $pager->toHtml();
         }
 

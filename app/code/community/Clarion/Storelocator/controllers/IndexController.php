@@ -43,14 +43,15 @@ class Clarion_Storelocator_IndexController extends Mage_Core_Controller_Front_Ac
      */
     public function viewAction()
     {
-        $storeId = $this->getRequest()->getParam('id');
-        if (!$storeId) {
+        $storelocatorId = $this->getRequest()->getParam('id');
+        if (!$storelocatorId) {
             return $this->_forward('noRoute');
         }
         
         /** @var $model Clarion_Storelocator_Model_Storelocator */
-        $model = Mage::getModel('clarion_storelocator/storelocator');
-        $model->load($storeId);
+        $model = Mage::getModel('clarion_storelocator/storelocator')
+                ->setStoreId(Mage::app()->getStore()->getId())
+                ->load($storelocatorId);
 
         if (!$model->getId()) {
             return $this->_forward('noRoute');

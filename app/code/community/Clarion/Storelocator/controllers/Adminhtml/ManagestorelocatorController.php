@@ -98,15 +98,15 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
     public function massDeleteAction()
     {
         //Get store ids from selected checkbox
-        $storeIds = $this->getRequest()->getParam('storeIds');
+        $storelocatorIds = $this->getRequest()->getParam('storelocatorIds');
         
-        if (!is_array($storeIds)) {
+        if (!is_array($storelocatorIds)) {
              Mage::getSingleton('adminhtml/session')->addError($this->__('Please select store(s).'));
         } else {
-            if (!empty($storeIds)) {
+            if (!empty($storelocatorIds)) {
                 try {
-                    foreach ($storeIds as $storeId) {
-                        $storelocator = Mage::getSingleton('clarion_storelocator/storelocator')->load($storeId);
+                    foreach ($storelocatorIds as $storelocatorId) {
+                        $storelocator = Mage::getSingleton('clarion_storelocator/storelocator')->load($storelocatorId);
                         //delete image file
                         if($storelocator->getStoreLogo()) {
                             $oldFileTargetPath = Mage::getBaseDir('media') . DS . 'clarion_storelocator' . DS . $storelocator->getStoreLogo();
@@ -116,7 +116,7 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
                         $storelocator->delete();
                     }
                      Mage::getSingleton('adminhtml/session')->addSuccess(
-                        $this->__('Total of %d record(s) have been deleted.', count($storeIds))
+                        $this->__('Total of %d record(s) have been deleted.', count($storelocatorIds))
                     );
                 } catch (Exception $e) {
                      Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
@@ -133,21 +133,21 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
     public function massStatusAction()
     {
         //Get store ids from selected checkbox
-        $storeIds = $this->getRequest()->getParam('storeIds');
+        $storelocatorIds = $this->getRequest()->getParam('storelocatorIds');
         
-        if (!is_array($storeIds)) {
+        if (!is_array($storelocatorIds)) {
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select store(s)'));
         } else {
             try {
-                foreach ($storeIds as $storeId) {
+                foreach ($storelocatorIds as $storelocatorId) {
                     Mage::getSingleton('clarion_storelocator/storelocator')
-                    ->load($storeId)
+                    ->load($storelocatorId)
                     ->setStatus($this->getRequest()->getParam('status'))
                     ->setIsMassupdate(true)
                     ->save();
                 }
                 Mage::getSingleton('adminhtml/session')->addSuccess(
-                    $this->__('Total of %d record(s) were successfully updated', count($storeIds))
+                    $this->__('Total of %d record(s) were successfully updated', count($storelocatorIds))
                 );
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
@@ -174,7 +174,7 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
              ->_title($this->__('Manage Store Locator'));
 
         // 1. Get ID and create model
-        $id = $this->getRequest()->getParam('store_id');
+        $id = $this->getRequest()->getParam('storelocator_id');
         $model = Mage::getModel('clarion_storelocator/storelocator');
 
         // 2. Initial checking
@@ -266,7 +266,7 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
         // check if data sent
         if ($data = $this->getRequest()->getPost()) {
 
-            $id = $this->getRequest()->getParam('store_id');
+            $id = $this->getRequest()->getParam('storelocator_id');
             $model = Mage::getModel('clarion_storelocator/storelocator');
             $session    = Mage::getSingleton('adminhtml/session');
             /* @var $session Mage_Core_Model_Session */
@@ -292,7 +292,7 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
                     $session->addError($this->__('Unable to add/edit store.'));
                 }
                 $session->setStorelocatorData($data);
-                $this->_redirect('*/*/edit', array('store_id' => $this->getRequest()->getParam('store_id')));
+                $this->_redirect('*/*/edit', array('storelocator_id' => $this->getRequest()->getParam('storelocator_id')));
                 return;
             }
             
@@ -348,7 +348,7 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
 
                 // check if 'Save and Continue'
                 if ($this->getRequest()->getParam('back')) {
-                    $this->_redirect('*/*/edit', array('store_id' => $model->getId(), '_current'=>true));
+                    $this->_redirect('*/*/edit', array('storelocator_id' => $model->getId(), '_current'=>true));
                     return;
                 }
                 // go to grid
@@ -363,7 +363,7 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
                 Mage::helper('clarion_storelocator')->__('An error occurred while saving the store.'));
             }
             $session->setStorelocatorData($data);
-            $this->_redirect('*/*/edit', array('store_id' => $this->getRequest()->getParam('store_id')));
+            $this->_redirect('*/*/edit', array('storelocator_id' => $this->getRequest()->getParam('storelocator_id')));
             return;
         }
         $this->_redirect('*/*/');
@@ -375,9 +375,9 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
         
         $storelocator = Mage::getModel('clarion_storelocator/storelocator');
         $storeName = isset($data['name']) ? $data['name'] : '';
-        $storeId = isset($data['store_id']) ? $data['store_id'] : '';
+        $storelocatorId = isset($data['storelocator_id']) ? $data['storelocator_id'] : '';
         
-        if($storelocator->storeExists($storeName, $storeId)) {
+        if($storelocator->storeExists($storeName, $storelocatorId)) {
             $errors[] = Mage::helper('clarion_storelocator')->__('Store name already exists');
         }
         
@@ -405,7 +405,7 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
     public function deleteAction()
     {
         // check if we know what should be deleted
-        if ($id = $this->getRequest()->getParam('store_id')) {
+        if ($id = $this->getRequest()->getParam('storelocator_id')) {
             try {
                 // init model and delete
                 $model = Mage::getModel('clarion_storelocator/storelocator');
@@ -428,7 +428,7 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
                 // display error message
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 // go back to edit form
-                $this->_redirect('*/*/edit', array('store_id' => $id));
+                $this->_redirect('*/*/edit', array('storelocator_id' => $id));
                 return;
             }
         }

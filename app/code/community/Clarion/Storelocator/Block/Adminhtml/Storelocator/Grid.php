@@ -21,7 +21,7 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
          * This tells which sorting column to use in our grid. Which column 
          * should be used for default sorting
          */
-        $this->setDefaultSort('store_id');
+        $this->setDefaultSort('storelocator_id');
         
         /**
          * The default sorting order, ascending or descending
@@ -48,6 +48,7 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
         $collection = Mage::getModel('clarion_storelocator/storelocator')->getCollection();
         /* @var $collection Clarion_Storelocator_Model_Resource_Storelocator_Collection */
         $this->setCollection($collection);
+        //echo $collection->getSelect();
         return parent::_prepareCollection();
     }
     
@@ -66,13 +67,6 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
         */
         
         $enableDisable = Mage::getModel('clarion_storelocator/enabledisable')->toArray();
-        
-        $this->addColumn('store_id', array(
-            'header'=>Mage::helper('clarion_storelocator')->__('Store Id'),
-            'sortable'=>true,
-            'type' => 'number',
-            'index'=>'store_id'
-        ));
         
         $this->addColumn('name', array(
             'header'=>Mage::helper('clarion_storelocator')->__('Store Name'),
@@ -105,6 +99,22 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
             'index'=>'zipcode'
         ));
         
+        /**
+         * Check is single store mode
+         */
+        if (!Mage::app()->isSingleStoreMode()) {
+            $this->addColumn('store_id', array(
+                'header'        => Mage::helper('clarion_storelocator')->__('Store View'),
+                'index'         => 'store_id',
+                'type'          => 'store',
+                'store_all'     => true,
+                'store_view'    => true,
+                'sortable'      => false,
+                'filter_condition_callback'
+                                => array($this, '_filterStoreCondition'),
+            ));
+        }
+        
         $this->addColumn('status', array(
             'header'=>Mage::helper('clarion_storelocator')->__('Status'),
             'index'     => 'status',
@@ -125,7 +135,7 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
                 array(
                     'caption' => Mage::helper('clarion_storelocator')->__('Edit'),
                     'url'     => array('base'=> '*/*/edit'),
-                    'field'   => 'store_id'
+                    'field'   => 'storelocator_id'
                 )
             ),
             'filter'    => false,
@@ -150,7 +160,7 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
      */
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/*/edit', array('store_id' => $row->getId()));
+        return $this->getUrl('*/*/edit', array('storelocator_id' => $row->getId()));
     }
     
     /**
@@ -165,13 +175,13 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
          * your data structure, including: db table, single product magento model
          * , and the collection.
          */
-        $this->setMassactionIdField('store_id');
+        $this->setMassactionIdField('storelocator_id');
         
         /**
          * By using this we can set name of checkbox, used for selection. Which 
          * is used to pass all the ids to the controller.
          */
-        $this->getMassactionBlock()->setFormFieldName('storeIds');
+        $this->getMassactionBlock()->setFormFieldName('storelocatorIds');
         
         /**
          * url - sets url for the delete action
@@ -215,5 +225,24 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
     public function getGridUrl()
     {
         return $this->getUrl('*/*/grid', array('_current'=>true));
+    }
+    
+    /**
+     * This allows us to filter the grid on the store view.
+     *
+     */
+    protected function _filterStoreCondition($collection, $column)
+    {
+        if (!$value = $column->getFilter()->getValue()) {
+            return;
+        }
+
+        $this->getCollection()->addStoreFilter($value);
+    }
+    
+    protected function _afterLoadCollection()
+    {
+        $this->getCollection()->walk('afterLoad');
+        parent::_afterLoadCollection();
     }
 }
