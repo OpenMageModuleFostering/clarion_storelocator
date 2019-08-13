@@ -14,21 +14,22 @@
 #stores-list-div {
     width: 48%;
     float: left;
+    margin-right: 5px;
 }
 
 #stores-list-gmap-div {
     width: 50%;
     border: 1px solid silver;
-    float: right;
-    margin-left: 1px;
+    /* float: right;*/
+    padding: 5px;
     position: relative;
     overflow: hidden;
 }
 
 #store-list-map-canvas {
-   width:432px;
+   width:100%;
    height:600px;
-   float: right;
+  /* float: right;*/
 }
 
 #show-all-store {
@@ -101,7 +102,8 @@ padding: 5px 0px 5px 1px;
     vertical-align: top;
     border-top: 1px solid silver;
     border-left: 1px solid silver;
-     border-bottom: 1px solid silver;
+    border-bottom: 1px solid silver;
+    padding-bottom: 10px;
 }
 #store-view-detail {
     width: 100%;
@@ -111,8 +113,13 @@ padding: 5px 0px 5px 1px;
 #store-gmap {
     width: 50%;
     vertical-align: top;
-    padding: 10px;
+    padding: 5px;
     border: 1px solid silver;
+}
+
+#googleMap {
+    width: 100%;
+    height: 600px;
 }
 
 #store-view-detail-table {

@@ -38,7 +38,7 @@
         </reference>
         <reference name="root">
             <action method="setTemplate">
-                <template>page/2columns-right.phtml</template>
+                <template>page/1column.phtml</template>
             </action>
             <action method="setHeaderTitle" translate="title" module="clarion_storelocator">
                 <title>Storelocator</title>
@@ -68,7 +68,7 @@
         </reference>
         <reference name="root">
             <action method="setTemplate">
-                <template>page/2columns-right.phtml</template>
+                <template>page/1column.phtml</template>
             </action>
         </reference>
         <reference name="content">

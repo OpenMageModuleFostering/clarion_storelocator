@@ -100,18 +100,29 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
         ));
         
         /**
-         * Check is single store mode
+         * _isExport flag used to show columns only in csv export not in the grid
          */
-        if (!Mage::app()->isSingleStoreMode()) {
+        if(!$this->_isExport) {
+            /**
+             * Check is single store mode
+             */
+            if (!Mage::app()->isSingleStoreMode()) {
+                $this->addColumn('store_id', array(
+                    'header'        => Mage::helper('clarion_storelocator')->__('Store View'),
+                    'index'         => 'store_id',
+                    'type'          => 'store',
+                    'store_all'     => true,
+                    'store_view'    => true,
+                    'sortable'      => false,
+                    'filter_condition_callback'
+                                    => array($this, '_filterStoreCondition'),
+                ));
+            }
+        } else {
             $this->addColumn('store_id', array(
-                'header'        => Mage::helper('clarion_storelocator')->__('Store View'),
-                'index'         => 'store_id',
-                'type'          => 'store',
-                'store_all'     => true,
-                'store_view'    => true,
-                'sortable'      => false,
-                'filter_condition_callback'
-                                => array($this, '_filterStoreCondition'),
+            'header'=> Mage::helper('clarion_storelocator')->__('Store View [ admin - All Store Views ]'),
+            'index' => 'store_id',
+            'renderer'  => 'Clarion_Storelocator_Block_Adminhtml_Storelocator_Renderer_Store',
             ));
         }
         
@@ -143,7 +154,94 @@ class Clarion_Storelocator_Block_Adminhtml_Storelocator_Grid extends Mage_Adminh
             'index'     => 'stores',
             'is_system' => true,
        ));
-        
+       
+       /**
+        * columns for export csv
+        */
+       if($this->_isExport) {
+        $this->addColumn('street_address', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Street Address'),
+             'index'=>'street_address'
+         ));
+       } 
+       
+       if($this->_isExport) {
+        $this->addColumn('phone', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Phone'),
+             'index'=>'phone'
+         ));
+       } 
+       
+       if($this->_isExport) {
+        $this->addColumn('fax', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Fax'),
+             'index'=>'fax'
+         ));
+       } 
+       
+       if($this->_isExport) {
+        $this->addColumn('url', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('URL'),
+             'index'=>'url'
+         ));
+       } 
+       
+       if($this->_isExport) {
+        $this->addColumn('email', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Email'),
+             'index'=>'email'
+         ));
+       } 
+       
+       if($this->_isExport) {
+        $this->addColumn('store_logo', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Store Logo'),
+             'index'=>'store_logo'
+         ));
+       }
+       
+       if($this->_isExport) {
+        $this->addColumn('trading_hours', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Trading Hours'),
+             'index'=>'trading_hours'
+         ));
+       }
+       
+       if($this->_isExport) {
+        $this->addColumn('radius', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Radius'),
+             'index'=>'radius'
+         ));
+       }
+       
+       if($this->_isExport) {
+        $this->addColumn('latitude', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Latitude'),
+             'index'=>'latitude'
+         ));
+       }
+       
+       if($this->_isExport) {
+        $this->addColumn('longitude', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Longitude'),
+             'index'=>'longitude'
+         ));
+       }
+       
+       if($this->_isExport) {
+        $this->addColumn('zoom_level', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Zoom Level'),
+             'index'=>'zoom_level'
+         ));
+       }
+       
+       if($this->_isExport) {
+        $this->addColumn('description', array(
+             'header'=>Mage::helper('clarion_storelocator')->__('Description'),
+             'index'=>'description'
+         ));
+       }
+       
       //Import Export functionality
       $this->addExportType('*/*/exportCsv', Mage::helper('clarion_storelocator')->__('CSV'));
       $this->addExportType('*/*/exportXml', Mage::helper('clarion_storelocator')->__('XML'));

@@ -25,6 +25,22 @@
                     <sort_order>2</sort_order>
                      <action>adminhtml/system_config/edit/section/clarion_storelocator_general_setting</action>
                 </clarion_storelocator_general_settings> 
+                <import_export translate="title" module="clarion_storelocator">
+                    <title>Import/Export</title>
+                    <sort_order>3</sort_order>
+                    <children>
+                        <export translate="title" module="clarion_storelocator">
+                            <title>Export</title>
+                            <sort_order>1</sort_order>
+                            <action>adminhtml/managestorelocator</action>
+                        </export> 
+                        <import translate="title" module="clarion_storelocator">
+                            <title>Import</title>
+                            <sort_order>2</sort_order>
+                            <action>adminhtml/importstorelocator</action>
+                        </import> 
+                    </children>
+                </import_export> 
             </children>
         </clarion_storelocator>
     </menu>
@@ -59,6 +75,20 @@
                                 <title>General Settings</title>
                                 <sort_order>2</sort_order>
                             </clarion_storelocator_general_settings>
+                            <import_export translate="title" module="clarion_storelocator">
+                                <title>Import/Export</title>
+                                <sort_order>3</sort_order>
+                                <children>
+                                    <export translate="title" module="clarion_storelocator">
+                                        <title>Export</title>
+                                        <sort_order>1</sort_order>
+                                    </export> 
+                                    <import translate="title" module="clarion_storelocator">
+                                        <title>Import</title>
+                                        <sort_order>2</sort_order>
+                                    </import> 
+                                </children>
+                            </import_export>
                         </children>
                     </clarion_storelocator>
                 </children>

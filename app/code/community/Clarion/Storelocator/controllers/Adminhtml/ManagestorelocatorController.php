@@ -456,6 +456,11 @@ class Clarion_Storelocator_Adminhtml_ManagestorelocatorController extends Mage_A
             case 'delete':
                 return Mage::getSingleton('admin/session')->isAllowed('clarion_storelocator/clarion_manage_storelocator/delete');
                 break;
+            
+             case 'exportCsv':
+              case 'exportXml':
+                return Mage::getSingleton('admin/session')->isAllowed('clarion_storelocator/import_export/export');
+                break;
             default:
                 return Mage::getSingleton('admin/session')->isAllowed('clarion_storelocator/clarion_manage_storelocator');
                 break;

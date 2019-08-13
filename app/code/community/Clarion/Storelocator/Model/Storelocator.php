@@ -30,4 +30,19 @@ class Clarion_Storelocator_Model_Storelocator extends Mage_Core_Model_Abstract
         return (is_array($result) && count($result) > 0) ? true : false;
     }
     
+    /**
+     * Upload store csv file and import data from it
+     *
+     * @throws Mage_Core_Exception
+     * @param Varien_Object $object
+     * @return Clarion_Storelocator_Model_Storelocator
+     */
+    public function uploadAndImport($object)
+    {
+         $resultObj = $this->_getResource()->uploadAndImport($object);
+         if($resultObj){
+             return $resultObj;
+         }
+    }
+    
 }

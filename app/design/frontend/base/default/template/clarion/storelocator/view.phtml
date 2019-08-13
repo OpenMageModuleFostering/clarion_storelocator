@@ -115,7 +115,7 @@
             <?php if($_storeView->getRadius()): ?>
             <tr>
                 <th class="label">Radius</th>
-                <td><?php echo $this->escapeHtml($_storeView->getRadius()) ?></td>
+                <td><?php echo $this->escapeHtml($_storeView->getRadius()) ?>&nbsp;Miles</td>
             </tr>
             <?php endif; ?>
             <!-- Description -->
@@ -128,7 +128,7 @@
        </tbody>
         </table>
     </td>
-    <td id="store-gmap" style="valign:top"><div id="googleMap" style="width:430px;height:600px;"></div></td>
+    <td id="store-gmap" style="valign:top"><div id="googleMap"></div></td>
     </tr>
     <tr><td>&nbsp;</td></tr>
     <tr>

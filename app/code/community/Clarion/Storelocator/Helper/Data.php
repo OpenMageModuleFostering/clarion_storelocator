@@ -126,4 +126,14 @@ class Clarion_Storelocator_Helper_Data extends Mage_Core_Helper_Abstract
         $countryModel = Mage::getModel('directory/country')->loadByCode($countryCode);
         return $countryName = $countryModel->getName();
     }
+    
+    /**
+     * Maximum size of uploaded files.
+     *
+     * @return int
+     */
+    public function getMaxUploadSize()
+    {
+        return min(ini_get('post_max_size'), ini_get('upload_max_filesize'));
+    }
 }

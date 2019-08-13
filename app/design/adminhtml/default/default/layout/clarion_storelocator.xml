@@ -38,4 +38,9 @@
     <adminhtml_managestorelocator_edit>
         <update handle="editor"/>
     </adminhtml_managestorelocator_edit>
+    <adminhtml_importstorelocator_index>
+        <reference name="content">
+            <block type="clarion_storelocator/adminhtml_import_edit" name="importstorelocator.form.container"/>
+        </reference>
+    </adminhtml_importstorelocator_index>
 </layout>

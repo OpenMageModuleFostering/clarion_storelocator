@@ -4,7 +4,7 @@
  * 
  * @category    Clarion
  * @package     Clarion_Storelocator
- * @author      Clarion Magento Team <pandurang.babar@clariontechnologies.co.in>
+ * @author      Clarion Magento Team <magento@clariontechnologies.co.in>
  * 
  */
 /** @var $installer Mage_Core_Model_Resource_Setup */
