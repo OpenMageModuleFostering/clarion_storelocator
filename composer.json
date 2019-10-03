@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Clarion_Storelocator",
+    "name": "OpenMageModuleFostering\/Clarion_Storelocator",
     "type": "magento-module",
     "license": "Open-Software-License-(OSL)",
     "homepage": "",
     "description": "Store Locator With Google Map",
     "authors": [
-    {
-        "name": "Clarion Technologies",
-        "email": "magento@clariontechnologies.co.in"
-    }
-],
+        {
+            "name": "Clarion Technologies",
+            "email": "magento@clariontechnologies.co.in"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
